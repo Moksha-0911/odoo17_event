@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_event_venue_tree" model="ir.ui.view">
+        <field name="name">event.venue.tree</field>
+        <field name="model">event.venue</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="address"/>
+                <field name="capacity"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_event_venue_form" model="ir.ui.view">
+        <field name="name">event.venue.form</field>
+        <field name="model">event.venue</field>
+        <field name="arch" type="xml">
+            <form string="Event Venue">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="address"/>
+                        <field name="capacity"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_event_venue_search" model="ir.ui.view">
+    <field name="name">event.venue.search</field>
+    <field name="model">event.venue</field>
+    <field name="arch" type="xml">
+        <search string="Search Event Venues">
+            <field name="name"/>
+            <field name="address"/>
+            <field name="capacity"/>
+     <!-- Group By -->
+            <group expand="0" string="Group By">
+                <filter string="Address" name="group_by_address" domain="[]" context="{'group_by': 'address'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+</odoo>

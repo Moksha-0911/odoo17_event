@@ -1,0 +1,35 @@
+{
+    'name':'Event management',
+    'version':'1.0',
+    'category':'Events',
+    'license': 'LGPL-3',
+    'author':'Moksha Shah',
+    'depends':['base','mail','website'],
+    'data':[
+        'data/attendee_registration_template.xml',
+        'data/event_management_homepage.xml',
+        'data/ir_sequence_data.xml',
+        'data/attendee_email_template.xml',
+        'data/attendee_scheduled_actions.xml',
+        'security/ir.model.access.csv',
+        'views/actions.xml',
+        'views/menu.xml',
+        'reports/attendee_report.xml',
+        'reports/attendee_report_template.xml',
+        'views/events.xml',
+        'views/event_category.xml',
+        'views/event_attendee.xml',
+        'views/tickets.xml',
+        'views/ticket_type.xml',
+        'views/sponsor.xml',
+        'views/speaker.xml',
+        'views/venue.xml',
+    ],
+   'assets':{
+        'web.assets_backend':[
+             # 'Event_management/static/src/events_page.xml',
+            # 'Event_management/static/src/js/create_event.js',
+            # 'Event_management/static/src/js/event_create.xml',
+        ],
+    }
+    }

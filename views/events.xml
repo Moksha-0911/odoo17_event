@@ -1,0 +1,113 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="view_event_tree" model="ir.ui.view">
+        <field name="name">event.management.tree</field>
+        <field name="model">event.management</field>
+        <field name="arch" type="xml">
+            <tree string="Events" create="0">
+                <header>
+                    <button type="object" name="custom_create_event" class="oe_highlight" string="Create Event" display="always"/>
+                    <button type="object" name="action_event" class="oe_highlight" string="Go To Events" display="always"/>
+                </header>
+                <field name="name"/>
+                <field name="event_date"/>
+                <field name="description"/>
+                <field name="category_id" widget="many2one_tags"/>
+                <field name="state" decoration-success='state =="done"' decoration-warning='state =="confirmed"' decoration-danger='state =="canceled"' decoration-info='state =="pre-booked"' widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_event_form" model="ir.ui.view">
+        <field name="name">event.management.form</field>
+        <field name="model">event.management</field>
+        <field name="arch" type="xml">
+            <form string="Event">
+                <header>
+                    <button name="action_prebook" type="object" string="Pre-Booked" class="btn-secondary"/>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn-primary"/>
+                    <button name="action_done" type="object" string="Done" class="btn-success"/>
+                    <button name="action_cancel" type="object" string="Canceled" class="btn-danger"/>
+                </header>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="pre-booked,confirmed,done,canceled" nolabel="1" readonly="1"/>
+                </header>
+                <sheet>
+                     <div class="oe_button_box" name="button_box">
+                        <button name="action_view_attendees" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="attendee_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="event_date"/>
+                        <field name="description"/>
+                        <field name="category_id" widget="many2one_tags"/>
+                    </group>
+                     <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_event_kanban" model="ir.ui.view">
+        <field name="name">event.management.kanban</field>
+        <field name="model">event.management</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="event_date"/>
+                <field name="description"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong t-esc="record.name.value"/>
+                            <br/>
+                            <span><strong>Date:</strong> <t t-esc="record.event_date.value"/></span>
+                            <br/>
+                            <span><strong>Description:</strong> <t t-esc="record.description.value"/></span>
+                            <span><br><strong>Status:</strong></br> <t t-esc="record.state.value"/></span>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+   <record id="view_event_search" model="ir.ui.view">
+    <field name="name">event.management.search</field>
+    <field name="model">event.management</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="event_date"/>
+            <field name="state"/>
+
+            <!-- Filter for event state -->
+            <filter name="filter_prebooked" string="Pre-Booked" domain="[('state', '=', 'pre-booked')]"/>
+            <filter name="filter_confirmed" string="Confirmed" domain="[('state', '=', 'confirmed')]"/>
+            <filter name="filter_done" string="Done" domain="[('state', '=', 'done')]"/>
+            <filter name="filter_cancelled" string="Cancelled" domain="[('state', '=', 'canceled')]"/>
+        </search>
+    </field>
+</record>
+
+<!--&lt;!&ndash; Add custom button to control panel &ndash;&gt;-->
+<!--    <record id="view_event_management_action" model="ir.ui.view">-->
+<!--        <field name="name">event.management.tree.button</field>-->
+<!--        <field name="model">event.management</field>-->
+<!--        <field name="inherit_id" ref="event_management.action_events"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//div[contains(@class, 'o_cp_buttons')]" position="inside">-->
+<!--                <button name="action_open_event_form" type="object" string="Add New" class="btn btn-primary" icon="fa-plus"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

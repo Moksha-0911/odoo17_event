@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_event_ticket_type_form" model="ir.ui.view">
+            <field name="name">event.ticket.type.form</field>
+            <field name="model">event.ticket.type</field>
+            <field name="arch" type="xml">
+                <form string="Event ticket Type">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="ticket_code"/>
+                            <field name="event_id"/>
+                            <field name="price"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_event_ticket_type_tree" model="ir.ui.view">
+            <field name="name">event.ticket.type.tree</field>
+            <field name="model">event.ticket.type</field>
+            <field name="arch" type="xml">
+                <tree string="Event ticket Type">
+                    <field name="name"/>
+                    <field name="ticket_code"/>
+                    <field name="event_id"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

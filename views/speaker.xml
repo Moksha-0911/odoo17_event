@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_event_speaker_tree" model="ir.ui.view">
+        <field name="name">event.speaker.tree</field>
+        <field name="model">event.speaker</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="topic"/>
+                <field name="event_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_event_speaker_form" model="ir.ui.view">
+        <field name="name">event.speaker.form</field>
+        <field name="model">event.speaker</field>
+        <field name="arch" type="xml">
+            <form string="Event Speaker">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="topic"/>
+                        <field name="event_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_event_speaker_search" model="ir.ui.view">
+    <field name="name">event.speaker.search</field>
+    <field name="model">event.speaker</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="topic"/>
+            <field name="event_ids"/>
+
+            <!-- Filters -->
+            <filter string="Topic" name="filter_topic" domain="[('topic', '!=', False)]"/>
+            <filter string="Has Events" name="filter_has_events" domain="[('event_ids', '!=', False)]"/>
+        </search>
+    </field>
+</record>
+
+</odoo>

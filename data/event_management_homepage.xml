@@ -1,0 +1,85 @@
+<odoo>
+    <!-- Homepage Template -->
+    <template id="event_homepage_template" name="Event Management Homepage">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+
+                <!-- Header Section -->
+                <div class="text-center">
+                    <h1 class="display-4 text-primary fw-bold">Welcome to Our Event Management Company🎉</h1>
+                    <p class="lead text-muted">Discover amazing events and register now!</p>
+                </div>
+
+<!--                Featured Image -->
+<!--                <div class="text-center my-4">-->
+<!--                    <img src="/Event_management/static/src/img/banner.jpg" class="img-fluid rounded shadow-lg"-->
+<!--                         style="max-width: 80%;" alt="Event Banner"/>-->
+<!--                </div>-->
+
+                <!-- Events Section -->
+                <h2 class="text-center mt-5 mb-4">🔥 Upcoming Events</h2>
+                <div class="row">
+                    <t t-if="events">
+                        <t t-foreach="events" t-as="event">
+                            <div class="col-md-4 mb-4">
+                                <div class="card shadow-lg border-0">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-info"><t t-esc="event.name"/></h5>
+                                        <p class="card-text"><strong>Date:</strong> <t t-esc="event.event_date"/></p>
+                                        <p class="card-text"><t t-esc="event.description"/></p>
+                                        <a t-att-href="'/attendee/register?event_id=' + str(event.id)" class="btn btn-primary">Register Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+<!--                    <t t-else="">-->
+<!--                        <p class="text-center text-danger">No events available at the moment.</p>-->
+<!--                    </t>-->
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center mt-5">
+                    <a href="/events" class="btn btn-lg btn-success shadow">📅 View All Events</a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Events Page Template -->
+    <template id="events_page_template" name="All Events Page">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+
+                <!-- Page Header -->
+                <div class="text-center">
+                    <h1 class="display-4 text-dark fw-bold">📅 Explore Our Upcoming Events 🎉</h1>
+                    <p class="lead text-muted">Don't miss out on amazing experiences. Register now!!!</p>
+                </div>
+
+                <!-- Events List -->
+                <div class="row mt-4">
+                    <t t-if="events">
+                        <t t-foreach="events" t-as="event">
+                            <div class="col-md-4 mb-4">
+                                <div class="card border-0 shadow">
+<!--                                    <img src="/Event_management/static/src/img/event_default.jpg" class="card-img-top"-->
+<!--                                         alt="Event Image"/>-->
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary"><t t-esc="event.name"/></h5>
+                                        <p class="card-text"><strong>Date:</strong> <t t-esc="event.event_date"/></p>
+                                        <p class="card-text"><t t-esc="event.description"/></p>
+                                        <a t-att-href="'/attendee/register?event_id=%s' % event.id" class="btn btn-outline-primary btn-block">Register Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <p class="text-center text-danger">No events available at the moment.</p>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

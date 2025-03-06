@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_event_attendee_tree" model="ir.ui.view">
+        <field name="name">event.attendee.tree</field>
+        <field name="model">event.attendee</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="attendee_event_code"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="event_id" widget="many2one_tags"/>
+                <field name="state" decoration-info="state == 'active'" decoration-danger="state == 'inactive'"
+                       widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_event_attendee_form" model="ir.ui.view">
+        <field name="name">event.attendee.form</field>
+        <field name="model">event.attendee</field>
+        <field name="arch" type="xml">
+            <form string="Event Attendee">
+                <header>
+                    <button name="action_print_attendee_pdf"
+                            string="Print PDF"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="action_print_attendee_xlsx"
+                            string="Generate Report"
+                            type="object"
+                            class="oe_stat_button"/>
+                    <button name="send_sms"
+                            string="Send sms"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="toggle_attendee_state" string="Attendee State" type="object" class="oe_stat_button"/>
+                     <field name="state" widget="statusbar" statusbar_visible="active,inactive" nolabel="1" readonly="1"/>
+                </header>
+                <sheet>
+                    <field name="attendee_event_code" nolabel="1" class="oe_stat_button" style="font-weight: bold; font-size: 16px;"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="event_id" widget="many2one_tags"/>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_event_attendee_search" model="ir.ui.view">
+        <field name="name">event.attendee.search</field>
+        <field name="model">event.attendee</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="event_id"/>
+
+                <!-- Grouping by Event -->
+                <group string="Event Filters">
+                    <filter name="filter_event" string="Has Event" domain="[('event_id', '!=', False)]"/>
+                    <filter name="filter_no_event" string="No Event" domain="[('event_id', '=', False)]"/>
+                </group>
+
+                <!-- Group by options -->
+                <separator/>
+                <group string="Group By">
+                    <filter name="group_by_event" string="Event" context="{'group_by': 'event_id'}"/>
+                    <filter name="group_by_email" string="Email" context="{'group_by': 'email'}"/>
+                </group>
+
+            </search>
+        </field>
+    </record>
+</odoo>

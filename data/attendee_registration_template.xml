@@ -1,0 +1,52 @@
+<odoo>
+    <template id="attendee_registration_template" name="Attendee Registration">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h2 class="text-center">Attendee Registration Form</h2>
+
+                <!-- Success Message -->
+                <t t-if="success">
+                    <div class="alert text-center p-3 rounded shadow-lg" style="background-color: #D8BFD8; color: black;">
+                        <h3 class="text-white bg-success p-2 rounded">🎉 <t t-esc="success"/> 🎉</h3>
+                    </div>
+                </t>
+
+                <t t-if="error">
+                    <div class="alert alert-danger">
+                        <t t-esc="error"/>
+                    </div>
+                </t>
+
+                <form action="/attendee/submit" method="post" class="p-4 border rounded shadow">
+                    <!-- CSRF Token -->
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                    <div class="mb-3">
+                        <label class="form-label">Attendee Name</label>
+                        <input type="text" name="name" class="form-control" required="required"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="text" name="email" class="form-control" required="required"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="text" name="phone" class="form-control" required="required"/>
+                    </div>
+                     <div class="mb-3">
+                        <label class="form-label">Select Event</label>
+                        <select name="event_id" class="form-control" required="required">
+                        <option value="">-- Choose Event --</option>
+                        <t t-foreach="events" t-as="event">
+                        <option t-att-value="event.id" t-att-selected="True if selected_event and event.id == selected_event.id else False"><t t-esc="event.name"/></option>
+                        </t>
+                    </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

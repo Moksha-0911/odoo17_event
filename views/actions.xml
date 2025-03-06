@@ -1,0 +1,96 @@
+<odoo>
+    <record id="action_events" model="ir.actions.act_window">
+        <field name="name">Events</field>
+        <field name="res_model">event.management</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p>
+                Manage all your events efficiently.
+            </p>
+    </field>
+    </record>
+
+<!--    &lt;!&ndash; ✅ Add Custom Button in Control Panel &ndash;&gt;-->
+<!--    <record id="view_event_management_action" model="ir.actions.act_window">-->
+<!--        <field name="name">event.management.tree.button</field>-->
+<!--        <field name="model">event.management</field>-->
+<!--        <field name="inherit_id" ref="event_management.action_events"/>-->
+<!--        <field name="arch" type="html">-->
+<!--            <xpath expr="//div[contains(@class, 'o_cp_buttons')]" position="after">-->
+<!--                <button name="action_open_event_form" type="object" string="Add New" class="btn btn-primary" icon="fa-plus"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <record id="action_event_category" model="ir.actions.act_window">
+        <field name="name">Event category</field>
+        <field name="res_model">event.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Use this interface to manage the Event category Records
+            </p>
+        </field>
+    </record>
+    <record id="action_event_attendee" model="ir.actions.act_window">
+        <field name="name">Event attendee</field>
+        <field name="res_model">event.attendee</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Use this interface to manage the Event attendee Records
+            </p>
+        </field>
+    </record>
+    <record id="action_event_ticket" model="ir.actions.act_window">
+        <field name="name">Event ticket</field>
+        <field name="res_model">event.ticket</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Use this interface to manage the Event ticket Records
+            </p>
+        </field>
+    </record>
+    <record id="action_event_ticket_type" model="ir.actions.act_window">
+        <field name="name">Event ticket Type</field>
+        <field name="res_model">event.ticket.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Use this interface to manage the Event ticket Type Records
+            </p>
+        </field>
+    </record>
+    <record id="action_event_sponsor" model="ir.actions.act_window">
+        <field name="name">Event sponsor</field>
+        <field name="res_model">event.sponsor</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Use this interface to manage the Event sponsor Records
+            </p>
+        </field>
+    </record>
+    <record id ="action_event_speaker" model="ir.actions.act_window">
+        <field name="name">Event speaker</field>
+        <field name="res_model">event.speaker</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Use this interface to manage the Event speaker Records
+            </p>
+        </field>
+    </record>
+     <record id="action_event_venue" model="ir.actions.act_window">
+        <field name="name">Event Venue</field>
+        <field name="res_model">event.venue</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Manage event venues, their addresses, and capacities.
+            </p>
+        </field>
+    </record>
+</odoo>

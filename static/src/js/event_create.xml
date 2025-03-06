@@ -1,0 +1,7 @@
+<templates xml:space="preserve">
+    <t t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//button[@class='btn btn-primary o_list_button_add']" position="replace">
+            <button type="button" class="btn btn-primary o_list_button_add" t-on-click="openEventForm">Add New</button>
+        </xpath>
+    </t>
+</templates>

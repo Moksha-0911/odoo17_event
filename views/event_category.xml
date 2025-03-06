@@ -1,0 +1,40 @@
+<odoo>
+    <!-- Tree View for Event Categories -->
+    <record id="view_event_category_tree" model="ir.ui.view">
+        <field name="name">event.category.tree</field>
+        <field name="model">event.category</field>
+        <field name="arch" type="xml">
+            <tree string="Event category">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Event Categories -->
+    <record id="view_event_category_form" model="ir.ui.view">
+        <field name="name">event.category.form</field>
+        <field name="model">event.category</field>
+        <field name="arch" type="xml">
+            <form string="Event category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                     <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_event_category_search" model="ir.ui.view">
+    <field name="name">event.category.search</field>
+    <field name="model">event.category</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+     </search>
+    </field>
+</record>
+</odoo>

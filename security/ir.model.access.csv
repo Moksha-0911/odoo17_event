@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_event_management_user,event.management.user,model_event_management,base.group_user,1,0,0,0
+access_event_management_manager,event.management.manager,model_event_management,base.group_system,1,1,1,1
+access_event_category_user,event.category.user,model_event_category,base.group_user,1,1,1,1
+access_event_attendee_user,event.attendee.user,model_event_attendee,base.group_user,1,1,1,1
+access_event_ticket_user,event.ticket.user,model_event_ticket,base.group_user,1,1,1,1
+access_event_ticket_type_user,event.ticket.type.user,model_event_ticket_type,base.group_user,1,1,1,1
+access_event_sponsor_user,event.sponsor.user,model_event_sponsor,base.group_user,1,1,1,1
+access_event_speaker_user,event.speaker.user,model_event_speaker,base.group_user,1,1,1,1
+access_event_venue_user,event.venue.user,model_event_venue,base.group_user,1,1,1,1

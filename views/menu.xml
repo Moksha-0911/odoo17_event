@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <!-- Parent Menu -->
+        <menuitem id="menu_Event_management" name="Event Management"/>
+
+        <!-- child menu -->
+        <menuitem id="menu_events" name="Events" parent="menu_Event_management" action="action_events"/>
+        <menuitem id="menu_event_category" name="Event category" parent="menu_Event_management" action="action_event_category"/>
+        <menuitem id="menu_event_attendee" name="Event attendee" parent="menu_Event_management" action="action_event_attendee"/>
+        <menuitem id="menu_event_ticket" name="Event ticket" parent="menu_Event_management" action="action_event_ticket"/>
+        <menuitem id="menu_event_ticket_type" name="Event ticket Type" parent="menu_Event_management" action="action_event_ticket_type"/>
+        <menuitem id="menu_event_sponsor" name="Event sponsor" parent="menu_Event_management" action="action_event_sponsor"/>
+        <menuitem id="menu_event_speaker" name="Event speaker" parent="menu_Event_management" action="action_event_speaker"/>
+        <menuitem id="menu_event_venue" name="Event venue" parent="menu_Event_management" action="action_event_venue"/>
+
+
+
+
+
+
+    </data>
+</odoo>

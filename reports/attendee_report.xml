@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_attendee_details" model="ir.actions.report">
+        <field name="name">Attendee Report</field>
+        <field name="model">event.attendee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Event_management.report_attendee_details</field>
+        <field name="report_file">Event_management.report_attendee_details</field>
+        <field name="binding_model_id" ref="model_event_attendee"/>
+        <field name="print_report_name">'Attendee_Report_' + object.name</field>
+    </record>
+</odoo>
+

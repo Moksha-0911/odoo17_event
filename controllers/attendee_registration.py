@@ -1,0 +1,80 @@
+import re
+from odoo import http
+from odoo.http import request
+from datetime import datetime
+
+class AttendeeRegistration(http.Controller):
+    @http.route('/', auth='public', website=True)
+    def event_homepage(self, **kwargs):
+        """ Render the homepage with the welcome message and upcoming events """
+        events = request.env['event.management'].sudo().search([('state', '=', 'upcoming')], limit=6)
+        return request.render('Event_management.event_homepage_template', {'events': events})
+
+    @http.route('/events', auth='public', website=True)
+    def all_events(self, event_id=None, **kwargs):
+        """ Render the events page with a list of all events """
+        events = request.env['event.management'].sudo().search([])
+        return request.render('Event_management.events_page_template', {'events': events})
+
+
+    @http.route('/attendee/register', type='http', auth="public", website=True)
+    def attendee_registration_form(self, event_id=None, **kwargs):
+        events = request.env['event.management'].sudo().search([]) #fetching all the events
+
+        # Get the selected event if 'event_id' is provided
+        selected_event = request.env['event.management'].sudo().browse(int(event_id)) if event_id else None
+
+        return request.render('Event_management.attendee_registration_template',{'events':events, 'selected_event':selected_event})
+
+    @http.route('/attendee/submit', type='http', auth="public", methods=['POST'], website=True)
+    def attendee_registration_submit(self, **post):
+        # Extract data
+        name = post.get('name')
+        email = post.get('email')
+        phone = post.get('phone')
+        event_id = post.get('event_id')
+
+
+        # Validate Email with Regex
+        email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        if not re.match(email_regex, email):
+            events = request.env['event.management'].sudo().search([])
+            return request.render('Event_management.attendee_registration_template', {
+                'error': "Invalid email format! Please enter a valid email address.",
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'events':events,
+            })
+
+        # Ensure event_id is valid
+        event = request.env['event.management'].sudo().browse(int(event_id)) if event_id else None
+        if not event or not event.exists():
+            return request.render('Event_management.attendee_registration_template', {
+                'error': "Selected event is invalid. Please choose a valid event.",
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'events': request.env['event.management'].sudo().search([]),
+            })
+
+        # Create an attendee record in Odoo
+        attendee = request.env['event.attendee'].sudo().create({
+            'name': name,
+            'email':email,
+            'phone':phone,
+            'event_id':event_id,
+        })
+        # Send Email Confirmation
+        template = request.env.ref('Event_management.email_template_attendee_confirmation')
+        if template:
+            template.sudo().send_mail(attendee.id, force_send=True)
+
+        # Render success message
+        return request.render('Event_management.attendee_registration_template', {
+            'success': f"Hurray! {name} registered successfully!",
+            'events': request.env['event.management'].sudo().search([]),
+        })
+
+
+
