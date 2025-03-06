@@ -28,31 +28,7 @@ class EventAttendee(models.Model):
     cancellation_date = fields.Datetime(string="Cancel Date")
     attendee_event_code = fields.Char(string="Attendee Code", readonly=True, copy=False)
 
-    def send_sms(self):
-        TWILIO_ACCOUNT_SID = 'ACc904510735f73d4a1e8f64a92a4464cf'
-        TWILIO_AUTH_TOKEN = '9e982a02ef81d841639978aa216a65c3'
-        TWILIO_PHONE_NUMBER = '+18507880460'
-        try:
-            client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
-            # Constructing message with attendee's name and event name
-            message_body = (
-                f"Hello {self.name},\n"
-                f"You are successfully registered for the event '{self.event_id.name}'.\n"
-                "We look forward to your participation!\n\n"
-                "Best regards,\n"
-                "Event Management Team"
-            )
-
-            message = client.messages.create(
-                body=message_body,
-                from_=TWILIO_PHONE_NUMBER,
-                to=f'+91{self.phone}'
-            )
-
-        except Exception as e:
-            print(f"Error sending Message: {e}")  # Log the error
-    #verifying email
+        #verifying email
     @api.constrains('email')
     def _check_valid_email(self):
         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
