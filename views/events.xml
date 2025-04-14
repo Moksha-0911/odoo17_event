@@ -14,6 +14,9 @@
                 <field name="description"/>
                 <field name="category_id" widget="many2one_tags"/>
                 <field name="state" decoration-success='state =="done"' decoration-warning='state =="confirmed"' decoration-danger='state =="canceled"' decoration-info='state =="pre-booked"' widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+<!--                <field name="currency_id"/>-->
+<!--                <field name="price"/>-->
             </tree>
         </field>
     </record>
@@ -44,6 +47,9 @@
                         <field name="event_date"/>
                         <field name="description"/>
                         <field name="category_id" widget="many2one_tags"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+<!--                        <field name="currency_id"/>-->
+<!--                        <field name="price"/>-->
                     </group>
                      <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
@@ -72,7 +78,8 @@
                             <span><strong>Date:</strong> <t t-esc="record.event_date.value"/></span>
                             <br/>
                             <span><strong>Description:</strong> <t t-esc="record.description.value"/></span>
-                            <span><br><strong>Status:</strong></br> <t t-esc="record.state.value"/></span>
+                            <br/>
+                            <span><strong>Status:</strong> <t t-esc="record.state.value"/></span>
                         </div>
                     </t>
                 </templates>
@@ -89,6 +96,11 @@
             <field name="name"/>
             <field name="event_date"/>
             <field name="state"/>
+            <group string="Filters">
+                <filter name="upcoming_events" string="Upcoming" domain="[('event_date', '>=', context_today())]"/>
+                <filter name="past_events" string="Past" domain="[('event_date', '&lt;', context_today())]"/>
+
+            </group>
 
             <!-- Filter for event state -->
             <filter name="filter_prebooked" string="Pre-Booked" domain="[('state', '=', 'pre-booked')]"/>
@@ -98,6 +110,32 @@
         </search>
     </field>
 </record>
+
+    <record id="view_event_graph" model="ir.ui.view">
+        <field name="name">event.management.graph</field>
+        <field name="model">event.management</field>
+        <field name="arch" type="xml">
+            <graph string="Event Statistics" type="bar">
+            <field name="state" type="row"/>
+            <field name="id" type="measure"/>
+        </graph>
+        </field>
+    </record>
+
+<!--    <record id="view_event_filter" model="ir.ui.view">-->
+<!--    <field name="name">event.management.search</field>-->
+<!--    <field name="model">event.management</field>-->
+<!--    <field name="arch" type="xml">-->
+<!--        <search string="Events">-->
+<!--            <field name="name"/>-->
+<!--            <field name="event_date" filter_domain="[('event_date', '&gt;=', self.start_date), ('event_date', '&lt;=', self.end_date)]"/>-->
+<!--            <group string="Group By">-->
+<!--                <filter string="Event Date" domain="[]" context="{'group_by': 'event_date'}"/>-->
+<!--            </group>-->
+<!--        </search>-->
+<!--    </field>-->
+<!--</record>-->
+
 
 <!--&lt;!&ndash; Add custom button to control panel &ndash;&gt;-->
 <!--    <record id="view_event_management_action" model="ir.ui.view">-->

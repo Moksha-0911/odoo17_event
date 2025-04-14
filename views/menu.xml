@@ -4,6 +4,8 @@
         <menuitem id="menu_Event_management" name="Event Management"/>
 
         <!-- child menu -->
+<!--        <menuitem id="menu_event_dashboard" name="Event Dashboard" parent="menu_Event_management" action="action_event_dashboard"/>-->
+        <menuitem id="menu_dashboard" name="Event Dashboard" parent="menu_Event_management" action="action_dashboard"/>
         <menuitem id="menu_events" name="Events" parent="menu_Event_management" action="action_events"/>
         <menuitem id="menu_event_category" name="Event category" parent="menu_Event_management" action="action_event_category"/>
         <menuitem id="menu_event_attendee" name="Event attendee" parent="menu_Event_management" action="action_event_attendee"/>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="razorpay_payment_page" name="Razorpay Payment Page">
+        <t t-call="website.layout">
+            <div class="container my-5 text-center">
+                <h2>Redirecting to Razorpay...</h2>
+                <p>Please wait while we process your payment.</p>
+            </div>
+
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script type="text/javascript">
+                var options = {
+                    "key": " t-esc='razorpay_key'",
+                    "amount": t t-esc='amount',
+                    "currency": "t t-esc='currency'",
+                    "name": "Event Ticket Payment",
+                    "description": "Payment for t t-esc='event_name'",
+                    "order_id": "t t-esc='order_id'",
+                    "callback_url": "/attendee/payment/success?attendee_id=t t-esc='attendee_id'",
+                    "prefill": {
+                        "name": " t-esc='attendee_name'",
+                        "email": "t t-esc='attendee_email'",
+                        "contact": "t t-esc='attendee_phone'"
+                    },
+                    "theme": {
+                        "color": "#528FF0"
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                window.onload = function() {
+                    rzp1.open();
+                };
+            </script>
+        </t>
+    </template>
+</odoo>

@@ -44,6 +44,27 @@
                     </select>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">Select Ticket Type</label>
+                        <select name="ticket_type_id" class="form-control" id="ticket_type">
+                            <option value="">-- Choose Ticket Type --</option>
+                            <t t-foreach="ticket_types" t-as="ticket">
+                            <option t-att-value="ticket.id" t-att-selected="True if selected_ticket and ticket.id == selected_ticket.id else False">
+                            <t t-esc="ticket.name"/> - <t t-esc="ticket.price"/> USD
+                            </option>
+                            </t>
+                        </select>
+                    </div>
+                    <!--Providing ticket price details for the attendee registration-->
+                    <t t-if="ticket_types">
+                        <div class="mb-3">
+                            <strong>Ticket Price:</strong> <span id="ticket_price"><t t-esc="ticket_price"/> USD</span>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <p class="text-muted">No ticket pricing available.</p>
+                    </t>
+
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>
             </div>

@@ -6,11 +6,15 @@
         <field name="model">event.attendee</field>
         <field name="arch" type="xml">
             <tree>
+                <header>
+                    <button type="object" name="action_attendee_registration" class="oe_highlight" string="Attendee Registration" display="always"/>
+                </header>
                 <field name="attendee_event_code"/>
                 <field name="name"/>
                 <field name="email"/>
                 <field name="phone"/>
                 <field name="event_id" widget="many2one_tags"/>
+
                 <field name="state" decoration-info="state == 'active'" decoration-danger="state == 'inactive'"
                        widget="badge"/>
             </tree>
@@ -46,6 +50,7 @@
                         <field name="email"/>
                         <field name="phone"/>
                         <field name="event_id" widget="many2one_tags"/>
+<!--                        <field name="ticket_type_id" widget="many2one_tags"/>-->
                     </group>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
@@ -64,6 +69,10 @@
                 <field name="email"/>
                 <field name="phone"/>
                 <field name="event_id"/>
+<!--                <field name="event_id" filter_domain="[('event_date', '&gt;=', self.start_date), ('event_date', '&lt;=', self.end_date)]"/>&ndash;&gt;-->
+<!--            <group string="Group By">-->
+<!--                <filter string="Event" domain="[]" context="{'group_by': 'event_id'}"/>-->
+<!--            </group>-->
 
                 <!-- Grouping by Event -->
                 <group string="Event Filters">
@@ -81,4 +90,30 @@
             </search>
         </field>
     </record>
+
+    <!--Graph view-->
+    <record id="view_event_attendee_graph" model="ir.ui.view">
+        <field name="name">event.attendee.graph</field>
+        <field name="model">event.attendee</field>
+        <field name="arch" type="xml">
+            <graph string="Attendee Statistics" type="bar">
+            <field name="event_id" type="row"/>
+            <field name="id" type="measure"/>
+        </graph>
+        </field>
+    </record>
+<!--    <record id="view_event_attendee_filter" model="ir.ui.view">-->
+<!--    <field name="name">event.attendee.search</field>-->
+<!--    <field name="model">event.attendee</field>-->
+<!--    <field name="arch" type="xml">-->
+<!--        <search string="Attendees">-->
+<!--            <field name="name"/>-->
+<!--            <field name="event_id" filter_domain="[('event_date', '&gt;=', self.start_date), ('event_date', '&lt;=', self.end_date)]"/>-->
+<!--            <group string="Group By">-->
+<!--                <filter string="Event" domain="[]" context="{'group_by': 'event_id'}"/>-->
+<!--            </group>-->
+<!--        </search>-->
+<!--    </field>-->
+<!--</record>-->
+
 </odoo>

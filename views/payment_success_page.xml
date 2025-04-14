@@ -1,0 +1,11 @@
+
+<odoo>
+    <t t-name="Event_management.payment_success_page">
+        <section class="oe_container">
+            <h2>Payment Successful</h2>
+            <p>Thank you, <t t-esc="name"/>, for registering for <t t-esc="event_name"/>.</p>
+            <p>Your payment of ₹<t t-esc="ticket_price"/> has been received successfully.</p>
+            <a href="/" class="btn btn-primary">Go Back to Home</a>
+        </section>
+    </t>
+</odoo>

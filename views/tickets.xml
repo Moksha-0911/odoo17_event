@@ -12,6 +12,8 @@
                             <field name="event_id" readonly="1"/>
                             <field name="price"/>
                             <field name="available_tickets"/>
+<!--                            <field name="currency_id"/>-->
+<!--                            <field name="event_price"/>-->
                         </group>
                     </sheet>
                 </form>
@@ -28,6 +30,8 @@
                     <field name="event_id" readonly="1"/>
                     <field name="price"/>
                     <field name="available_tickets"/>
+<!--                    <field name="currency_id"/>-->
+<!--                    <field name="event_price"/>-->
                 </tree>
             </field>
         </record>

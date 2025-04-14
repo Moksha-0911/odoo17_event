@@ -1,0 +1,445 @@
+<odoo>
+    <template id="dashboard_template">
+        <t t-call="web.layout">
+            <div class="dashboard-container">
+
+                <h2 class="dashboard-title">📊Event Management Dashboard</h2>
+<!--                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<!--                <div class="chart-container">-->
+<!--                    <canvas id="eventLineChart"> </canvas>-->
+                <div class="date-filter-section">
+                    <div class="date-input-container">
+                        <label for="start_date"><strong>Start Date:</strong></label>
+                            <input type="date" id="start_date" class="styled-input"/>
+                    </div>
+                <div class="date-input-container">
+                        <label for="end_date"><strong>End Date:</strong></label>
+                            <input type="date" id="end_date" class="styled-input"/>
+                </div>
+                    <button class="filter-btn" onclick="filterEvents()">🎯 Filter Events</button>
+                </div>
+
+                <!-- 📊 Statistics Section -->
+                <div class="stats-container">
+                    <div class="stat-box total-events">
+                        <a t-attf-href="/web#action=967"><!--action id for event.management model-->
+                            <span class="icon">📅</span>
+                            Total Events
+                            <span class="count"><t t-esc="total_events"/></span>
+                        </a>
+                    </div>
+                    <div class="stat-box total-attendees">
+                        <a t-attf-href="/web#action=969"><!--action id for event.attendee model-->
+                            <span class="icon">👥</span>
+                            Total Attendees
+                            <span class="count"><t t-esc="total_attendees"/></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 📅 Recent Events Section -->
+<!--                <img t-att-src="'/Event_management/static/src/img/linechart.png'" string="Linechart" class="dashboard-banner"/>-->
+<!--                <img t-att-src="'/Event_management/static/src/img/line.png'" string="Linechart" class="dashboard-banner"/>-->
+<!--                <img t-att-src="'/Event_management/static/src/img/barchart.png'" string="Barchart" class="dashboard-banner"/>-->
+<!--                <img t-att-src="'/Event_management/static/src/img/piechart.png'" string="Piechart" size="12px" class="dashboard-banner"/>-->
+
+                <h3 class="section-title">📅 Recent Events</h3>
+                <table class="event-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Attendees</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="events" t-as="event"><!--fetches the events from event.management model-->
+                            <tr>
+                                <td><t t-esc="event['name']"/></td>
+                                <td><t t-esc="event['event_date']"/></td>
+                                <td><t t-esc="event['attendee_count']"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+
+<!--            &lt;!&ndash; Row 1: Bar and Line Chart &ndash;&gt;-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-6">-->
+<!--                        <canvas id="barChart"></canvas>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-6">-->
+<!--                        <canvas id="lineChart"></canvas>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Row 2: Pie Chart &ndash;&gt;-->
+<!--                <div class="row mt-4">-->
+<!--                    <div class="col-md-6">-->
+<!--                        <canvas id="pieChart"></canvas>-->
+<!--                    </div>-->
+<!--                </div>-->
+        </t>
+<!--javascript code for filtering out the events as per the start and end date selected-->
+    <script>
+        function filterEvents() {
+        var startDate = document.getElementById("start_date").value;
+        var endDate = document.getElementById("end_date").value;
+
+        if (!startDate || !endDate) {
+            alert("Please select both Start Date and End Date.");
+            return;
+        }
+
+        var url = new URL(window.location.href);
+        url.searchParams.set('start_date', startDate);
+        url.searchParams.set('end_date', endDate);
+        window.location.href = url.toString();
+    }
+</script>
+
+
+
+
+
+        <!--  CSS Styling -->
+        <style>
+/* Apply full-width layout */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(120deg, #f6f8fc, #eef1f6);
+    margin: 0;
+    padding: 0;
+}
+
+/* Change the background of the entire dashboard */
+.dashboard-container {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* Light Blue Gradient */
+    min-height: 100vh; /* Full height */
+    padding: 20px;
+}
+            .date-filter-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        background: linear-gradient(135deg, #f3f3f3, #d4e0ff);
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .date-input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .styled-input {
+            padding: 8px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            text-align: center;
+            font-size : 14px;
+            font-weight : bold;
+            color: white; /* Changes the text color */
+            background-color: grey; /* grey background */
+}
+            /* change the color of the placeholder text */
+    .styled-input::-webkit-datetime-edit {
+        color: #ff5733; /* Orange-red placeholder */
+        font-weight: bold;
+    }
+
+    .styled-input::-moz-placeholder {
+        color: #ff5733;
+    }
+
+    .styled-input::-ms-input-placeholder {
+        color: #ff5733;
+    }
+
+
+    .filter-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 15px;
+            font-weight : bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+    }
+
+
+    .filter-btn:hover {
+        background: #0056b3;
+    }
+
+/* Add some styling to the main content box */
+.dashboard-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+            /* Centering and Spacing */
+.filter-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 2px 5px 15px rgba(255, 123, 255, 0.3);
+    flex-wrap: wrap;
+}
+
+/* Labels */
+.filter-form label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Date Picker Fields */
+.filter-form input {
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+}
+
+.filter-form input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+/* Calendar Icon Styling */
+.filter-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(30%);
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+/* Filter Button */
+.filter-form button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.filter-form button:hover {
+    background: linear-gradient(135deg, #0056b3, #003f88);
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .filter-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-form input {
+        width: 100%;
+    }
+
+    .filter-form button {
+        width: 100%;
+    }
+}
+
+
+/* Header Styling */
+.dashboard-title {
+    font-size: 45px;
+    color : dark grey;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Date Filters */
+.filter-form {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filter-form label {
+    font-weight: 600;
+    color: #333;
+}
+
+.filter-form input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.filter-form button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter-form button:hover {
+    background: #0056b3;
+}
+
+/* Statistics Section */
+.stats-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    background: linear-gradient(135deg, #ffffff, #f1f1f1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    min-width: 300px;
+    flex: 1;
+    transition: all 0.3s ease-in-out;
+    margin: 10px;
+}
+
+.stat-box:hover {
+    transform: scale(1.08);
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-box .icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.stat-box .count {
+    font-size: 28px;
+    font-weight: 700;
+    color: #007bff;
+    margin-top: 5px;
+} .dashboard-banner {
+    width: 500px;  /* Adjust width */
+    height: auto;  /* Maintain aspect ratio */
+    max-width: 700%; /* Ensures responsiveness */
+}
+.dashboard-banner {
+    width: 500px;  /* Adjust width */
+    height: auto;  /* Maintain aspect ratio */
+    max-width: 700%; /* Ensures responsiveness */
+}.dashboard-banner {
+    width: 500px;  /* Adjust width */
+    height: auto;  /* Maintain aspect ratio */
+    max-width: 700%; /* Ensures responsiveness */
+}
+
+
+
+
+/* Recent Events Table */
+.section-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 30px;
+    padding-left: 15px;
+}
+
+.event-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.event-table th {
+    background: #007bff;
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    padding: 14px;
+}
+
+.event-table td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+.event-table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.event-table tr:hover {
+    background: #e2e6ea;
+    transition: 0.3s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .stats-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat-box {
+        width: 80%;
+    }
+
+    .filter-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .event-table th, .event-table td {
+        font-size: 14px;
+    }
+}
+</style>
+
+
+    </template>
+</odoo>

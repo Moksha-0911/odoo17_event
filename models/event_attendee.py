@@ -15,6 +15,7 @@ class EventAttendee(models.Model):
     email = fields.Char(string="Email",required=True)
     phone = fields.Char(string="Phone number",required=True)
     event_id = fields.Many2one('event.management',string="Events")
+    ticket_type_id = fields.Many2one('event.ticket.type',string="Ticket Type")
     email_sent = fields.Boolean(string="Email sent",default=False)
     state = fields.Selection(
         selection=[
@@ -28,7 +29,34 @@ class EventAttendee(models.Model):
     cancellation_date = fields.Datetime(string="Cancel Date")
     attendee_event_code = fields.Char(string="Attendee Code", readonly=True, copy=False)
 
-        #verifying email
+    def search_attendees(self, start_date, end_date):
+        return self.search([('event_id.event_date', '>=', start_date), ('event_id.event_date', '<=', end_date)])
+
+    def send_sms(self):
+        TWILIO_ACCOUNT_SID = 'ACc904510735f73d4a1e8f64a92a4464cf'
+        TWILIO_AUTH_TOKEN = '9e982a02ef81d841639978aa216a65c3'
+        TWILIO_PHONE_NUMBER = '+18507880460'
+        try:
+            client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+            # Constructing message with attendee's name and event name
+            message_body = (
+                f"Hello {self.name},\n"
+                f"You are successfully registered for the event '{self.event_id.name}'.\n"
+                "We look forward to your participation!\n\n"
+                "Best regards,\n"
+                "Event Management Team"
+            )
+
+            message = client.messages.create(
+                body=message_body,
+                from_=TWILIO_PHONE_NUMBER,
+                to=f'+91{self.phone}'
+            )
+
+        except Exception as e:
+            print(f"Error sending Message: {e}")  # Log the error
+    #verifying email
     @api.constrains('email')
     def _check_valid_email(self):
         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
@@ -93,6 +121,18 @@ class EventAttendee(models.Model):
             )
 
         return attendee
+
+    #creating link to the attendee registration form in website!
+
+    def action_attendee_registration(self):
+            # This method is called when the button is clicked
+            # You can add any logic here before redirecting
+            # After the logic, we redirect to the /redirect_to_events route
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/redirect_to_attendee_registration',
+            'target': 'new',  # Opens the URL in the new window
+        }
         #creating function to generate PDF for the event attendees
 
     def action_print_attendee_pdf(self):

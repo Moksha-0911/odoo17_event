@@ -12,6 +12,7 @@
                             <field name="ticket_code"/>
                             <field name="event_id"/>
                             <field name="price"/>
+                            <field name="available_tickets"/>
                         </group>
                     </sheet>
                 </form>
@@ -26,6 +27,7 @@
                     <field name="ticket_code"/>
                     <field name="event_id"/>
                     <field name="price"/>
+                    <field name="available_tickets"/>
                 </tree>
             </field>
         </record>

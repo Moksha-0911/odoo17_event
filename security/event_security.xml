@@ -1,0 +1,14 @@
+<odoo>
+<record id="event_management_rule" model="ir.rule">
+        <field name="name">Event management: Restrict by Company</field>
+        <field name="model_id" ref="model_event_management"/>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True"/><!--giving access to the record rule-->
+        <field name="perm_write" eval="True"/><!--giving access to the record rule-->
+        <field name="perm_create" eval="True"/><!--giving access to the record rule-->
+        <field name="perm_unlink" eval="True"/><!--giving access to the record rule-->
+       <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+<!--        <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>-->
+    </record>
+</odoo>
+

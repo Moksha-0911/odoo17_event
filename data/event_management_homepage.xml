@@ -69,7 +69,22 @@
                                         <h5 class="card-title text-primary"><t t-esc="event.name"/></h5>
                                         <p class="card-text"><strong>Date:</strong> <t t-esc="event.event_date"/></p>
                                         <p class="card-text"><t t-esc="event.description"/></p>
-                                        <a t-att-href="'/attendee/register?event_id=%s' % event.id" class="btn btn-outline-primary btn-block">Register Now</a>
+
+                                        <!-- Ticket Price Section -->
+                                    <t t-if="event.ticket_ids">
+                                        <p class="card-text"><strong>Ticket Price:</strong>
+                                            <t t-esc="'$' + str(event.ticket_ids[0].price)"/>
+                                        </p>
+                                    </t>
+                                    <t t-else="">
+                                        <p class="text-muted">No ticket pricing available.</p>
+                                    </t>
+                                        <t t-if="event.event_date and event.event_date >= today">
+                                            <a t-att-href="'/attendee/register?event_id=%s' % event.id" class="btn btn-outline-primary btn-block">Register Now</a>
+                                        </t>
+                                    <t t-else="">
+                                        <button class="btn btn-secondary btn-block" disabled="disabled">Registration Closed</button>
+                                    </t>
                                     </div>
                                 </div>
                             </div>

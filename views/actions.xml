@@ -1,26 +1,25 @@
 <odoo>
+<!--    <record id="action_event_dashboard" model="ir.actions.act_url">-->
+<!--        <field name="name">Event Dashboard</field>-->
+<!--        <field name="url">/event/dashboard</field>-->
+<!--        <field name="target">self</field>-->
+<!--    </record>-->
+    <record id="action_dashboard" model="ir.actions.act_url">
+        <field name="name">Event Dashboard</field>
+        <field name="url">/dashboard</field>
+        <field name="target">self</field>
+    </record>
+
     <record id="action_events" model="ir.actions.act_window">
         <field name="name">Events</field>
         <field name="res_model">event.management</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form,kanban,graph</field>
         <field name="help" type="html">
             <p>
                 Manage all your events efficiently.
             </p>
     </field>
     </record>
-
-<!--    &lt;!&ndash; ✅ Add Custom Button in Control Panel &ndash;&gt;-->
-<!--    <record id="view_event_management_action" model="ir.actions.act_window">-->
-<!--        <field name="name">event.management.tree.button</field>-->
-<!--        <field name="model">event.management</field>-->
-<!--        <field name="inherit_id" ref="event_management.action_events"/>-->
-<!--        <field name="arch" type="html">-->
-<!--            <xpath expr="//div[contains(@class, 'o_cp_buttons')]" position="after">-->
-<!--                <button name="action_open_event_form" type="object" string="Add New" class="btn btn-primary" icon="fa-plus"/>-->
-<!--            </xpath>-->
-<!--        </field>-->
-<!--    </record>-->
 
 
     <record id="action_event_category" model="ir.actions.act_window">
@@ -36,7 +35,7 @@
     <record id="action_event_attendee" model="ir.actions.act_window">
         <field name="name">Event attendee</field>
         <field name="res_model">event.attendee</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,graph</field>
         <field name="help" type="html">
             <p>
                 Use this interface to manage the Event attendee Records

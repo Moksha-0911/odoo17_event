@@ -12,10 +12,13 @@
         'data/attendee_email_template.xml',
         'data/attendee_scheduled_actions.xml',
         'security/ir.model.access.csv',
+        'security/event_security.xml',
         'views/actions.xml',
         'views/menu.xml',
         'reports/attendee_report.xml',
         'reports/attendee_report_template.xml',
+         # 'views/event_dashboard_template.xml',
+        'views/dashboard_template.xml',
         'views/events.xml',
         'views/event_category.xml',
         'views/event_attendee.xml',
@@ -23,13 +26,13 @@
         'views/ticket_type.xml',
         'views/sponsor.xml',
         'views/speaker.xml',
+        # 'views/payment_success_page.xml',
+        # 'views/razorpay_payment_page.xml',
         'views/venue.xml',
     ],
    'assets':{
         'web.assets_backend':[
-             # 'Event_management/static/src/events_page.xml',
-            # 'Event_management/static/src/js/create_event.js',
-            # 'Event_management/static/src/js/event_create.xml',
+            # 'Event_management/static/src/js/dashboard.js',
         ],
     }
     }

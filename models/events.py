@@ -21,6 +21,18 @@ class Event(models.Model):
         string="State",
         default="pre-booked"
     )
+    # #adding company id field for performing multicompany functionality
+    company_id = fields.Many2one("res.company", string="Company", required=True, default=lambda self: self.env.company)
+    #adding currency id field for performing multicurrency functionality
+    # currency_id = fields.Many2one('res.currency', string="Currency", default=lambda self: self.env.company.currency_id)
+    # price = fields.Monetary(string="Event Price", currency_field="currency_id")#and the price field too
+    ticket_ids = fields.One2many('event.ticket', 'event_id', string="Tickets")
+    start_date = fields.Date(string="Start Date")
+    end_date = fields.Date(string="End Date")
+    filtered_events = fields.One2many("event.management", compute="_compute_filtered_events", string="Filtered Events")
+
+    def search_events(self, start_date, end_date):
+        return self.search([('event_date', '>=', start_date), ('event_date', '<=', end_date)])
 
     def action_event(self):
         # This method is called when the button is clicked
@@ -32,7 +44,7 @@ class Event(models.Model):
             'target': 'new',  # Opens the URL in the new window
         }
 
-
+#creating custom button for the creating new event instead of the default new button
     def custom_create_event(self):
         return {
             'type': 'ir.actions.act_window',
@@ -51,17 +63,16 @@ class Event(models.Model):
         self.write({'state': 'pre-booked'})
 
     def action_confirm(self):
-        """Set state to Confirmed"""
+        #set state to Confirmed
         self.write({'state': 'confirmed'})
 
     def action_done(self):
-        """Set state to Done"""
+        #Set state to Done
         self.write({'state': 'done'})
 
     def action_cancel(self):
-        """Set state to Canceled"""
+        #Set state to Canceled
         self.write({'state': 'canceled'})
-    #creating function for the smart button that stores the information of event attendees
 
     def action_redirect_to_events(self):
         #Redirects to the website's Event Page
@@ -73,22 +84,40 @@ class Event(models.Model):
             'url': event_page_url,
             'target': 'new',
         }
-    # def action_open_event_form(self):
-    #      #Opens the form view of event.management
-    #     return {
-    #         'type': 'ir.actions.act_window',
-    #         'name': 'Add New',
-    #         'res_model': 'event.management',
-    #         'view_mode': 'form',
-    #         'view_id': False,  # Uses the default form view
-    #         'target': 'new',
-    #     }
+
+    @api.depends('start_date', 'end_date')
+    def _compute_filtered_events(self):
+        for record in self:
+            if record.start_date and record.end_date:
+                record.filtered_events = self.search([
+                    ('event_date', '>=', record.start_date),
+                    ('event_date', '<=', record.end_date)
+                ])
+            else:
+                record.filtered_events = self.search([])  # Show all if no filter is applied
+
+    @api.model
+    def create(self, vals):
+        event = super(Event, self).create(vals)
+
+        # Automatically create a default ticket type for the event
+        self.env["event.ticket.type"].create({
+                "name": "Default Ticket",
+                "event_id": event.id,
+                "price": 0.0,
+                "available_tickets": 0
+                })
+
+        return event
+
 
     @api.depends('attendee_ids')
     def _compute_attendee_count(self):
         #counts the number of attendees for each event
         for event in self:
             event.attendee_count = len(event.attendee_ids)
+
+            #creates smart button for the attendee count the function action_view_attendees
 
     def action_view_attendees(self):
         self.ensure_one()
@@ -101,4 +130,7 @@ class Event(models.Model):
             'domain': [('event_id', '=', self.id)],
             'context': {'default_event_id': self.id},
         }
+
+
+
 
