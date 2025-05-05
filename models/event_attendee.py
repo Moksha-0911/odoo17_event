@@ -139,7 +139,7 @@ class EventAttendee(models.Model):
         return self.env.ref('Event_management.action_report_attendee_details').report_action(self)
 
     def action_print_attendee_xlsx(self):
-        self.ensure_one()#it will generate report of the selected student only
+        self.ensure_one()#it will generate reports of the selected student only
 
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})

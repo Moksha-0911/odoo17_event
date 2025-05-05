@@ -1,6 +1,5 @@
 import re
 import json
-import razorpay
 from odoo import http
 from odoo.http import request
 from datetime import datetime, date

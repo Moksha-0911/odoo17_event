@@ -9,6 +9,7 @@
                 <field name="name"/>
                 <field name="address"/>
                 <field name="capacity"/>
+                <field name="event_id"/>
             </tree>
         </field>
     </record>
@@ -24,6 +25,7 @@
                         <field name="name"/>
                         <field name="address"/>
                         <field name="capacity"/>
+                         <field name="event_id"/>
                     </group>
                 </sheet>
             </form>
@@ -37,6 +39,7 @@
             <field name="name"/>
             <field name="address"/>
             <field name="capacity"/>
+             <field name="event_id"/>
      <!-- Group By -->
             <group expand="0" string="Group By">
                 <filter string="Address" name="group_by_address" domain="[]" context="{'group_by': 'address'}"/>

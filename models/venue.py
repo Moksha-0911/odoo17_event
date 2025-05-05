@@ -7,3 +7,4 @@ class EventVenue(models.Model):
     name = fields.Char(string="Venue Name", required=True)
     address = fields.Text(string="Address")
     capacity = fields.Integer(string="Capacity")
+    event_id = fields.Many2one('event.management', string="Events")
